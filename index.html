@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Taspy ✨</title>
+    <style>
+        /* Base Styles & Premium Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&display=swap');
+        
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Poppins', 'Noto Sans Bengali', sans-serif;
+            background: linear-gradient(135deg, #ffe6ea 0%, #fdfbfb 100%);
+            color: #4a4a4a; overflow: hidden; user-select: none;
+        }
+
+        /* Hide broken image text/icons when internet is slow */
+        img {
+            color: transparent;
+            font-size: 0;
+        }
+
+        /* Page System */
+        .page {
+            display: none; width: 100vw; height: 100vh;
+            flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 20px; box-sizing: border-box;
+            position: relative;
+        }
+        .active-page { display: flex; animation: fadeIn 2s ease-in-out; }
+
+        /* Premium Buttons */
+        .btn {
+            padding: 15px 40px; border: none; border-radius: 30px;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            color: white; font-size: 17px; font-weight: bold;
+            box-shadow: 0 8px 20px rgba(255,117,140,0.5); cursor: pointer;
+            animation: pulseGlow 2.5s infinite; outline: none; transition: 0.3s;
+            margin-top: 25px; letter-spacing: 1.5px; z-index: 10;
+        }
+        .btn:active { transform: scale(0.92); }
+
+        /* Magic Input Field */
+        input {
+            padding: 16px 20px; border-radius: 20px; border: 2px solid #ff9eaa;
+            text-align: center; font-size: 18px; outline: none; margin-bottom: 20px;
+            color: #ff4757; font-weight: bold; width: 230px; letter-spacing: 2px;
+            background: rgba(255,255,255,0.95); box-shadow: 0 10px 25px rgba(255,158,170,0.2);
+            transition: all 0.3s ease; z-index: 10;
+        }
+        input:focus { border-color: #ff4757; box-shadow: 0 10px 30px rgba(255,71,87,0.3); transform: scale(1.05); }
+
+        /* High Quality 3D Graphics Size */
+        .hq-3d-icon {
+            width: 140px; height: auto; margin-bottom: 20px;
+            filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.15));
+            z-index: 10;
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulseGlow { 
+            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(255,117,140,0.4); } 
+            50% { transform: scale(1.05); box-shadow: 0 10px 30px rgba(255,117,140,0.8); } 
+            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(255,117,140,0.4); } 
+        }
+        @keyframes floatAround {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes popIn { 0% { opacity: 0; transform: translateY(40px) scale(0.8); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes flyUpMagic { 0% { transform: translateY(60px) scale(1); opacity: 0; filter: blur(5px); } 20% { opacity: 1; filter: blur(0px); } 100% { transform: translateY(-600px) scale(2); opacity: 0; } }
+        @keyframes burstMagic { 0% { transform: scale(1); opacity:1; filter: brightness(1); } 100% { transform: scale(4); opacity: 0; filter: brightness(3); } }
+
+        /* Story Scenes */
+        .scene { display: none; flex-direction: column; align-items: center; height: 60vh; justify-content: center; z-index: 10;}
+        .active-scene { display: flex; animation: popIn 2s ease forwards; }
+        .story-text { font-size: 20px; font-weight: 600; color: #ff4757; margin-top: 30px; padding: 0 25px; line-height: 1.6; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);}
+        
+        /* Message Box with Smart Scrolling */
+        #messageBox {
+            height: 62vh; width: 92%; max-width: 450px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,194,205,0.8); border-radius: 25px;
+            padding: 30px; box-sizing: border-box;
+            overflow-y: auto; text-align: left;
+            line-height: 1.9; font-size: 16px; color: #333;
+            box-shadow: 0 20px 40px rgba(255,117,140,0.2);
+            margin-bottom: 20px; z-index: 10;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile */
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(#ff758c, #ff7eb3); border-radius: 10px; }
+
+        .error-msg { color: #ff0000; font-size: 14px; display: none; margin-top: -10px; margin-bottom: 15px; font-weight: bold; background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 10px; }
+
+        /* Night Sky Mode */
+        .night-mode { background: radial-gradient(circle at bottom, #1b2735 0%, #090a0f 100%) !important; color: white;}
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle infinite alternate; z-index: 1; }
+        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px #fff; } }
+
+        /* Floating Objects */
+        .floating-obj { position: absolute; opacity: 0.5; animation: floatUp linear infinite; z-index: 1; pointer-events: none; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.7; } 100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" src="song.mp3" loop></audio>
+
+    <!-- Background Sparkles -->
+    <div id="sparkle-container"></div>
+
+    <!-- PAGE 1: Lock Screen -->
+    <div id="page1" class="page active-page">
+        <!-- Kept alt="" empty so no ugly text shows when loading -->
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Face%20with%20Peeking%20Eye.png" alt="" class="hq-3d-icon" style="animation: floatAround 4s infinite ease-in-out;">
+        
+        <h2 style="color: #ff4757; font-size: 22px; padding: 0 20px; line-height: 1.5; z-index: 10;">
+            A magical surprise is waiting for the cutest person in this world!
+        </h2>
+        <p style="font-size: 15px; margin-bottom: 30px; font-weight: 600; color: #777; z-index: 10;">Enter your secret password...</p>
+        
+        <input type="password" id="passInput" placeholder="Secret Word">
+        <div id="errorMsg" class="error-msg">Oops! Wrong magic word! 🥺</div>
+        
+        <button class="btn" onclick="checkPassword()">Unlock Magic ✨</button>
+    </div>
+
+    <!-- PAGE 2: The Story & Suspense -->
+    <div id="page2" class="page">
+        <!-- Scene 1 -->
+        <div id="scene1" class="scene active-scene">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Mobile%20Phone.png" alt="" class="hq-3d-icon" style="animation: floatAround 3s infinite;">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Speech%20Balloon.png" style="width: 60px; position: absolute; top: 25%; right: 25%; animation: popIn 2s infinite alternate;" alt="">
+            <div class="story-text">Once upon a time, two souls connected from miles away...</div>
+        </div>
+
+        <!-- Scene 2 -->
+        <div id="scene2" class="scene">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Couple%20with%20Heart.png" alt="" class="hq-3d-icon" style="width: 170px;">
+            <div class="story-text">Imagining a world where distance doesn't exist. Just you and me...</div>
+        </div>
+
+        <!-- Scene 3 -->
+        <div id="scene3" class="scene night-mode" style="width:100vw; height:100vh; position:absolute; top:0; left:0; justify-content:center;">
+            <div id="stars-container1"></div> 
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Mantelpiece%20Clock.png" alt="" class="hq-3d-icon" style="filter: drop-shadow(0 0 20px rgba(255,255,255,0.5));">
+            <div class="story-text" style="color:#fff; font-size: 40px; margin-top: 15px; text-shadow: 0 0 10px #fff;">🕰️ <span id="clockTime">11:59 PM</span></div>
+            <div class="story-text" style="color:#00e5ff; font-size: 20px; letter-spacing: 2px;" id="clockDate">Date: 24/10/26</div>
+        </div>
+
+        <!-- Scene 4 -->
+        <div id="scene4" class="scene night-mode" style="width:100vw; height:100vh; position:absolute; top:0; left:0; justify-content:center;">
+            <div id="stars-container2"></div>
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Sparkling%20Heart.png" alt="" class="hq-3d-icon" style="width: 180px; filter: drop-shadow(0 0 30px #ff4757); animation: flyUpMagic 5s ease-in forwards;">
+            <div class="story-text" style="color: white; margin-top: 80px; font-size: 22px;">A feeling so strong, it traveled across the sky...</div>
+        </div>
+
+        <!-- Scene 5 -->
+        <div id="scene5" class="scene">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Love%20Letter.png" alt="" class="hq-3d-icon" id="magicEnvelope" style="width: 160px;">
+            <div class="story-text">A special message traveled miles just to reach you...</div>
+            <button class="btn" onclick="goToPage3()" style="margin-top: 40px; display:none;" id="openMsgBtn">Open The Message 💌</button>
+        </div>
+    </div>
+
+    <!-- PAGE 3: The Main Message -->
+    <div id="page3" class="page" style="background: linear-gradient(to bottom, #fff0f5, #ffe6ea);">
+        <div id="floating-objects-container"></div> 
+
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Face%20Holding%20Back%20Tears.png" alt="" style="width: 80px; height: auto; z-index: 10; margin-bottom: 10px; animation: floatAround 3s infinite;">
+        
+        <h2 style="color: #ff4757; font-size: 26px; margin-top: 0; z-index: 10; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">Happy 19th Birthday! 🎂</h2>
+        
+        <div id="messageBox">
+            <span id="typewriterText"></span>
+        </div>
+        
+        <button class="btn" onclick="goToPage4()" id="lastThingBtn" style="display: none;">One Last Thing... 👀</button>
+    </div>
+
+    <!-- PAGE 4: The Cute Ending -->
+    <div id="page4" class="page" style="background: #fff0f5;">
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/People%20Hugging.png" alt="" class="hq-3d-icon" style="width: 180px; animation: pulseGlow 4s infinite;">
+        
+        <h2 style="color: #ff4757; font-size: 26px; margin-top: 30px; padding: 0 15px; line-height: 1.4;">
+            Keep this smile on your face forever, Taspy! ✨
+        </h2>
+        <p style="font-size: 18px; font-weight: 600; color: #666; margin-bottom: 50px;">
+            ...and I'll be waiting for your Voice Note! 🥺❤️
+        </p>
+        
+        <button class="btn" style="background: linear-gradient(45deg, #ff4757, #ff6b81);" onclick="quitApp()">Quit App ✖️</button>
+    </div>
+
+    <script>
+        const banglaMessage = `শুভ জন্মদিন, এই ছোট্ট পৃথিবীর সবচেয়ে কিউট, সবচেয়ে মায়াবী আর সবচেয়ে স্পেশাল মানুষটার! আজ তোমার ১৯তম জন্মদিন, আর সত্যি বলতে, আমার কাছে আজকের দিনটা অন্য যেকোনো স্পেশাল দিনের চেয়েও অনেক বেশি দামি। ❤️<br><br>জানো তাসপি, প্রথম যেদিন তোমার সাথে কথা হয়েছিল, আমি কখনো ভাবিনি যে অনেক দূরের একটা মেয়ে আমার জীবনের এতটা জুড়ে থাকবে। এখন তো অবস্থা এমন যে, প্রতিদিন তোমার সাথে কথা না বললে, তোমার ঐ পাগলামি আর কিউট কথাগুলো না শুনলে আমার দিনটাই শেষ হতে চায় না। তোমার সাথে কথা বলে দিনের সবটুকু ক্লান্তি নিমেষেই শেষ হয়ে যায়। নিজের অজান্তেই কেটে যায় সব রাগ,মন খারাপ থাকলে তার ঠিক হয়ে যায়।🫣<br><br>তবে আমি এটা বলতে পারি যে আমি কখনো হারাবো না。<br><br>পৃথিবীর এত জটিলতার মাঝে তোমার মতো এমন একটা নরম, সৎ আর পবিত্র মনের মানুষ পাওয়া আসলেই ভাগ্যের ব্যাপার। তুমি ঠিক যেমন, সারাজীবন ঠিক তেমনই থেকো।😇<br><br>মাঝে মাঝে ভাবি, জানো? খুব ইচ্ছে করে, ইশ! যদি আজ তোমার এই বিশেষ দিনে তোমার ঠিক সামনে থাকতে পারতাম, সারাক্ষণ শুধু তোমাকে দেখতে পারতাম। তোমার হাত দুটো শক্ত করে ধরে চোখের দিকে তাকিয়ে বলতে পারতাম, 'হ্যাপি বার্থডে তাসপি!' তোমার কেক কাটার সময় আমি পাশে দাঁড়িয়ে থাকতাম, আর আমার নিজের হাতে তোমাকে কেক খাইয়ে দিতাম। একসাথে দুজন মিলে কোথাও ঘুরতে যেতাম, কত সুন্দর সুন্দর স্মৃতি তৈরি করতাম! রাত জেগে শুধু দূর থেকে তোমার কথা না ভেবে, তোমার চোখের সামনে বসে তোমার হাসিটা দেখতে পারতাম।💓<br><br>কিন্তু বাস্তবতায় আমরা অনেকটা দূরে। এই যে রাত জেগে তোমার কথা ভাবি, এটাও আমার কাছে একটা অদ্ভুত শান্তি।☺️<br><br>আজকের এই দিনটা শুধু তোমার। অনেক অনেক আনন্দ করো, নিজের খেয়াল রেখো। আর হ্যাঁ, এই ছেলেটাকে একটু মনে রেখো, আমি এর থেকে বেশী আর কিছুই চাই না তোমার কাছে !😉<br><br>আমি চাই যে তুমি আমাকে এমনভাবে মনে রাখো যেন জীবনে কখনো না কখনো তোমার এমন মনে হয় যে না এমন ও একজন ছিল আমার জীবনে যে কিনা আমায় এমন করে জন্মদিনে শুভেচ্ছা জানিয়ে ছিল। জীবনের কোনো একটা দিন বা কোনো একটা বিশেষ সময়ে যদি তোমার আমার কথা মনে পরে তাহলে ওই মুহূর্তে আমি সার্থক হবো।❣️<br><br>হয়তো বা তখন আমি নাও থাকতে পারি কিন্তু আমি চাই আমাদের মাঝে এমন কিছু থাকুক যা আমার অবর্তমানে তোমার কাছে স্মৃতি হিসেবে থেকে যাবে।যাক এতো আনন্দের দিনে আর এইদিকে বেশি এগোনো ঠিক হবে না তবে কখনো যদি তোমার মনে হয় এই বিষয়ে জানতে তাহলে বলো। বলার মতো অনেক কিছুই আছে কিন্তু শুনতে চাওয়া আগ্রহ আর সঠিক সময় এই দুইটার অভাব।😮‍💨<br><br>আর হ্যাঁ তুমি আমাকে যদি মন থেকে ধন্যবাদ দিতে চাও তাহলে একটা (ভয়েজে) শুধু এটুকু বলো যে "ধন্যবাদ, আপনাকে। বার্থডে উইশ করার জন্য।" তাহলে আমি বুঝতে পারবো যে এটা তোমার কাছে ভালো লাগছে। যদি ভালো গোলা না লাগে তাহলে বলার দরকার নেই।🫠<br><br>তোমার মনের সব ছোট-বড় স্বপ্নগুলো সত্যি হোক। তোমার জীবন আরো অনেক বেশি আন্দন্দময় হোক。<br>অনেক অনেক অনেক__ভালো থাকো তুমি আমি শুধু এটুকু দোয়া করি তোমার জন্য আল্লাহর কাছে !🤲♾️<br><br>প্রিয় ম্যাম,,,🎉🎊`;
+
+        // Create Stars & Objects
+        function createStars(containerId) {
+            const container = document.getElementById(containerId);
+            for (let i = 0; i < 80; i++) {
+                let star = document.createElement("div");
+                star.className = "star";
+                star.style.width = Math.random() * 4 + "px";
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.top = Math.random() * 100 + "vh";
+                star.style.animationDuration = (Math.random() * 2 + 1) + "s";
+                star.style.animationDelay = Math.random() * 2 + "s";
+                container.appendChild(star);
+            }
+        }
+        function createFloatingObjects(containerId, count, isHeart = true) {
+            const container = document.getElementById(containerId);
+            const urls = [
+                "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Two%20Hearts.png",
+                "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Sparkles.png"
+            ];
+            for (let i = 0; i < count; i++) {
+                let obj = document.createElement("img");
+                obj.src = isHeart ? urls[0] : urls[Math.floor(Math.random() * 2)];
+                obj.className = "floating-obj";
+                obj.style.left = Math.random() * 100 + "vw";
+                obj.style.animationDuration = (Math.random() * 6 + 6) + "s";
+                obj.style.animationDelay = Math.random() * 5 + "s";
+                obj.style.width = (Math.random() * 25 + 15) + "px";
+                container.appendChild(obj);
+            }
+        }
+        createFloatingObjects("sparkle-container", 15, false);
+        createStars("stars-container1");
+        createStars("stars-container2");
+
+        // Password
+        function checkPassword() {
+            let pass = document.getElementById("passInput").value.trim().toUpperCase();
+            if (pass === "HBD19") {
+                document.getElementById("errorMsg").style.display = "none";
+                document.getElementById("page1").classList.remove("active-page");
+                document.getElementById("page2").classList.add("active-page");
+                startStory();
+            } else {
+                document.getElementById("errorMsg").style.display = "block";
+            }
+        }
+
+        // Story Sequence
+        function startStory() {
+            setTimeout(() => { document.getElementById("scene1").classList.remove("active-scene"); document.getElementById("scene2").classList.add("active-scene"); }, 7500);
+            setTimeout(() => { 
+                document.getElementById("scene2").classList.remove("active-scene"); document.getElementById("scene3").classList.add("active-scene");
+                setTimeout(() => { document.getElementById("clockTime").innerText = "12:00 AM"; document.getElementById("clockDate").innerText = "Date: 25/10/26"; document.getElementById("clockDate").style.color = "#ff7eb3"; }, 4000); 
+            }, 15000);
+            setTimeout(() => { document.getElementById("scene3").classList.remove("active-scene"); document.getElementById("scene4").classList.add("active-scene"); }, 23000);
+            setTimeout(() => {
+                document.getElementById("scene4").classList.remove("active-scene"); document.getElementById("scene5").classList.add("active-scene");
+                setTimeout(() => {
+                    let envelope = document.getElementById("magicEnvelope");
+                    envelope.style.animation = "burstMagic 1.5s forwards";
+                    setTimeout(() => { 
+                        envelope.src = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Smiling%20Face%20with%20Tear.png"; 
+                        envelope.style.animation = "popIn 1.5s forwards"; 
+                    }, 1500);
+                    setTimeout(() => { document.getElementById("openMsgBtn").style.display = "inline-block"; }, 3500);
+                }, 2000);
+            }, 29500);
+        }
+
+        // Main Page & Typewriter (With Smart Scroll)
+        function goToPage3() {
+            document.getElementById("page2").classList.remove("active-page");
+            document.getElementById("page3").classList.add("active-page");
+            createFloatingObjects("floating-objects-container", 30, true);
+            try { let bgMusic = document.getElementById("bgMusic"); bgMusic.play().catch(e=>{}); } catch(e) {}
+
+            let speed = 90; 
+            let box = document.getElementById("messageBox");
+            let textElem = document.getElementById("typewriterText");
+            let cleanTextArray = banglaMessage.split(/<br>/g);
+            let currentLine = 0; let currentChar = 0;
+
+            function typeWriter() {
+                if (currentLine < cleanTextArray.length) {
+                    if (currentChar < cleanTextArray[currentLine].length) {
+                        textElem.innerHTML += cleanTextArray[currentLine].charAt(currentChar);
+                        currentChar++;
+                        
+                        // SMART SCROLL LOGIC: Only auto-scroll if user hasn't manually scrolled up
+                        let isScrolledUp = (box.scrollHeight - box.scrollTop - box.clientHeight) > 40;
+                        if (!isScrolledUp) {
+                            box.scrollTop = box.scrollHeight;
+                        }
+
+                        setTimeout(typeWriter, speed);
+                    } else {
+                        textElem.innerHTML += "<br>";
+                        currentLine++; currentChar = 0;
+                        setTimeout(typeWriter, speed * 2);
+                    }
+                } else {
+                    setTimeout(() => {
+                        document.getElementById("lastThingBtn").style.display = "inline-block";
+                        
+                        let isScrolledUpFinal = (box.scrollHeight - box.scrollTop - box.clientHeight) > 40;
+                        if (!isScrolledUpFinal) {
+                            box.scrollTop = box.scrollHeight;
+                        }
+                    }, 2000);
+                }
+            }
+            setTimeout(typeWriter, 1500);
+        }
+
+        function goToPage4() {
+            document.getElementById("page3").classList.remove("active-page");
+            document.getElementById("page4").classList.add("active-page");
+        }
+
+        function quitApp() {
+            if (confirm("Do you want to close the app?")) {
+                document.body.innerHTML = `
+                    <div style="height: 100vh; width: 100vw; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #000; color: #fff;">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Red%20Heart.png" style="width:80px; animation: pulseGlow 2s infinite; margin-bottom:20px;">
+                        <h2>App Closed</h2>
+                        <p style="color: #ff9eaa; font-size: 18px; margin-top: 10px;">Always Yours... Forever! ❤️</p>
+                    </div>`;
+                setTimeout(() => { window.close(); }, 1500);
+            }
+        }
+    </script>
+</body>
+</html>
